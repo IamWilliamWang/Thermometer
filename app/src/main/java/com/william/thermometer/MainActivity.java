@@ -1,9 +1,12 @@
 package com.william.thermometer;
 
+import android.app.AlertDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+/**
+ * 主类，负责导航窗格和Fragment的协调
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar myToolbar;
@@ -25,13 +38,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     FragmentManager fragmentManager = getSupportFragmentManager();
 
+
+    private boolean isBandOpen = true;
+    private boolean isBlueToothOpen = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState==null) {
-            fragmentManager.beginTransaction().add(R.id.frame_content,new MainPageFragment()).commit();
+        /*将首页Fragment设为默认显示*/
+        if (savedInstanceState == null) {
+            fragmentManager.beginTransaction().add(R.id.frame_content, new MainPageFragment()).commit();
         }
 
         /*设置toolbar*/
@@ -39,14 +56,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(myToolbar);
 
         /*设置floatingactionbutton*/
-        myFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        myFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "没有数据可以编辑", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        myFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+//        myFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "没有数据可以编辑", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         /*设置抽屉和导航窗格*/
         myDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -57,16 +74,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         myNavigationView = (NavigationView) findViewById(R.id.nav_view);
         myNavigationView.setNavigationItemSelectedListener(this);
+
+//
+//        FloatingActionsMenu floatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.floatingActionMenu);
+
+        com.getbase.floatingactionbutton.FloatingActionButton floatingActionButton = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.floatingActionButton1);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"蓝牙已"+(isBlueToothOpen?"关闭":"打开"),Snackbar.LENGTH_SHORT).show();
+
+                isBlueToothOpen=!isBlueToothOpen;
+            }
+        });
+
+
+        com.getbase.floatingactionbutton.FloatingActionButton floatingActionButton2 = (com.getbase.floatingactionbutton.FloatingActionButton) findViewById(R.id.floatingActionButton2);
+        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"手环已"+(isBandOpen?"关闭":"打开"),Snackbar.LENGTH_SHORT).show();
+                isBandOpen=!isBandOpen;
+            }
+        });
     }
 
     /*返回按钮，是否退出主程序*/
     @Override
     public void onBackPressed() {
 
-        if (myDrawer.isDrawerOpen(GravityCompat.START))  {
+        if (myDrawer.isDrawerOpen(GravityCompat.START)) {
             myDrawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            doExitApp();
+        }
+    }
+
+    private long exitTime = 0;
+
+    public void doExitApp() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
         }
     }
 
@@ -90,10 +141,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings:
-                Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame_content, new SettingsFragment())
+                        .commit();
+                myToolbar.setTitle("设置");
                 break;
             case R.id.action_share:
-                Toast.makeText(this,"分享",Toast.LENGTH_SHORT).show();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame_content, new ShareFragment())
+                        .commit();
+                myToolbar.setTitle("分享");
                 break;
         }
 
@@ -111,36 +170,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentManager
                         .beginTransaction()
 //                        .addToBackStack(null)
-                        .replace(R.id.frame_content,new MainPageFragment())
+                        .replace(R.id.frame_content, new MainPageFragment())
                         .commit();
                 myToolbar.setTitle("首页-监测体温");
                 break;
             case R.id.nav_findBand:
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.frame_content,new FindBandFragment())
+                        .replace(R.id.frame_content, new FindBandFragment())
                         .commit();
-                myToolbar.setTitle("查询手环");
+                myToolbar.setTitle("查找手环");
                 break;
             case R.id.nav_showBandInfor:
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.frame_content,new ShowBandInforFragment())
+                        .replace(R.id.frame_content, new ShowBandInforFragment())
                         .commit();
                 myToolbar.setTitle("显示手环信息");
                 break;
             case R.id.nav_addPatient:
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.frame_content,new AddPatientFragment())
+                        .replace(R.id.frame_content, new AddPatientFragment())
                         .commit();
                 myToolbar.setTitle("录入患者信息");
                 break;
+            case R.id.nav_editPatient:
+                new AlertDialog.Builder(this).setTitle("抱歉").setMessage("没有数据可以编辑").show();
+                break;
             case R.id.nav_settings:
-                Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame_content, new SettingsFragment())
+                        .commit();
+                myToolbar.setTitle("设置");
                 break;
             case R.id.nav_share:
-                Toast.makeText(this,"分享",Toast.LENGTH_SHORT).show();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame_content, new ShareFragment())
+                        .commit();
+                myToolbar.setTitle("分享");
                 break;
             default:
                 break;
@@ -149,5 +219,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 }

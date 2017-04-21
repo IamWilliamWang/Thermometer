@@ -1,13 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--主页面Fragment内容-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
-    <TextView
+    android:background="@color/windowBackground"
+    android:orientation="vertical">
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="主页面。显示当前体温信息，假设已经连接过手环"/>
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/homepage"
+        android:layout_alignParentTop="true"
+        android:id="@+id/mainPageImageView" />
 
 
-</LinearLayout>
+    <!--下面的按钮不会被显示-->
+    <TextView
+        android:text="蓝牙状态："
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/mainPageImageView"
+        android:layout_alignParentStart="true"
+        android:id="@+id/mainPageTextView" />
+
+    <Switch
+        android:id="@+id/mainPageSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:showText="true"
+        android:textOn="On"
+        android:textOff="Off"
+        android:checked="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/mainPageTextView"
+        android:layout_toEndOf="@+id/mainPageTextView" />
+
+    <TextView
+        android:text="手环连接状态："
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainpageTextView2"
+        android:layout_below="@+id/mainPageTextView"
+        android:layout_alignParentLeft="true" />
+
+    <Switch
+        android:id="@+id/mainPageSwitch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:showText="true"
+        android:textOn="On"
+        android:textOff="Off"
+        android:checked="true"
+        android:gravity="end"
+        android:layout_alignBottom="@+id/mainpageTextView2"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

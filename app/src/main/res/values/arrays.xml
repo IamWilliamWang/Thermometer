@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="settingsname">
+        <item>连接手环</item>
+        <item>更换手环状态</item>
+        <item>设置检测间隔时间</item>
+        <item>设置预警温度</item>
+        <item>编辑数据</item>
+        <item>删除患者信息</item>
+        <item>初始化数据</item>
+    </string-array>
+
+    <string-array name="sexlist">
+        <item>男性</item>
+        <item>女性</item>
+        <item>其他</item>
+    </string-array>
+</resources>

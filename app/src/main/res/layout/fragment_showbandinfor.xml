@@ -1,13 +1,139 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!--显示手环信息Fragment内容-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/windowBackground"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.william.thermometer.ShowBandInforFragment">
+    >
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="显示手环的工作状态、电量等" />
+        android:layout_height="wrap_content"
+        android:id="@+id/settings_titletextview"
+        android:gravity="center"
+        android:textColor="#aef"
+        android:textSize="50dp"
+        android:text="显示手环信息"/>
 
-</FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/settings_relativelayout1"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="80dp"
+        android:layout_below="@+id/settings_titletextview"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/batteryTextView"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手环目前电量："
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/batteryProgressBar"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="39dp"
+            android:progress="57"
+            android:max="100"
+            android:layout_alignBottom="@+id/batteryTextView"
+            android:layout_toEndOf="@+id/batteryTextView" />
+
+        <TextView
+            android:id="@+id/batteryTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="57%"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignTop="@+id/batteryProgressBar"
+            android:layout_toEndOf="@+id/batteryProgressBar" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/settings_relativelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:layout_below="@+id/settings_relativelayout1"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/distanceTextView"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="手环信号强度："
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/distanceProgressBar"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:progress="87"
+            android:max="100"
+            android:layout_alignBottom="@+id/distanceTextView"
+            android:layout_toEndOf="@+id/distanceTextView"
+            android:layout_marginStart="18dp" />
+
+        <TextView
+            android:id="@+id/distanceTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="很强"
+            android:layout_marginStart="10dp"
+            android:layout_alignBottom="@+id/distanceProgressBar"
+            android:layout_toEndOf="@+id/distanceProgressBar" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:layout_below="@+id/settings_relativelayout2"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/syncTextView"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="自动同步进度："
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/syncProgressBar"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:progress="20"
+            android:max="100"
+            android:layout_alignBottom="@+id/syncTextView"
+            android:layout_toEndOf="@+id/syncTextView"
+            android:layout_marginStart="18dp" />
+
+        <TextView
+            android:id="@+id/syncTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20%"
+            android:layout_marginStart="10dp"
+            android:layout_alignBottom="@+id/syncProgressBar"
+            android:layout_toEndOf="@+id/syncProgressBar" />
+    </RelativeLayout>
+
+</RelativeLayout>

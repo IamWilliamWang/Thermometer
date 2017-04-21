@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import com.william.thermometer.R;
 
+/**
+ * 查找手环Fragment
+ */
 public class FindBandFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

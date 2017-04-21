@@ -1,0 +1,33 @@
+<!--设置Fragment内容-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    tools:context="com.william.thermometer.SettingsFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/settings_textview"
+        android:gravity="center"
+        android:textColor="#aef"
+        android:text="设置"
+        android:textSize="50dp" />
+
+    <ListView
+        android:id="@+id/settings_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/settings_textview"
+        android:entries="@array/settingsname"
+        android:divider="#888"
+        android:dividerHeight="1dp"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"
+        android:layout_alignParentStart="true">
+
+    </ListView>
+
+
+</RelativeLayout>

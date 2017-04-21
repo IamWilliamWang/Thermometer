@@ -2,11 +2,16 @@ package com.william.thermometer;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
+import android.widget.Toast;
 
-
+/**
+ * 首页Fragment
+ */
 public class MainPageFragment extends Fragment {
 
     @Override
@@ -17,5 +22,8 @@ public class MainPageFragment extends Fragment {
 
         return root;
     }
+
+
+
 
 }

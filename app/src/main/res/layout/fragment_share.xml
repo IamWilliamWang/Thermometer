@@ -1,0 +1,17 @@
+<!--分享Fragment的布局-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+
+    tools:context="com.william.thermometer.ShareFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/settings_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</FrameLayout>

@@ -1,12 +1,16 @@
+<!--寻找手环Fragment内容-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/windowBackground"
     tools:context="com.william.thermometer.FindBandFragment">
 
-    <TextView
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="这里实现寻找手环的功能" />
-
+        app:srcCompat="@drawable/findband"
+        android:id="@+id/findBandImageView" />
 </FrameLayout>
